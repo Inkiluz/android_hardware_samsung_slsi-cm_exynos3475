@@ -1,9 +1,8 @@
-#ifndef __DECON_FB_H__
-#define __DECON_FB_H__
+#ifndef __DECON_H__
+#define __DECON_H__
 
-#define MAX_DECON_WIN           (7)
-#define MAX_DECON_EXT_WIN       (5)
-#define MAX_BUF_PLANE_CNT       3
+#define MAX_DECON_WIN       7
+#define MAX_BUF_PLANE_CNT   3
 
 typedef __u64 dma_addr_t;
 
@@ -39,46 +38,49 @@ struct s3c_fb_user_ion_client {
 };
 
 enum decon_idma_type {
-    IDMA_G0 = 0x0,
-    IDMA_G1,
-    IDMA_VG0,
-    IDMA_VG1,
-    IDMA_VGR0,
-    IDMA_VGR1,
-    IDMA_G2,
-    IDMA_G3,
+	IDMA_G0 = 0x0,
+	IDMA_G1,
+	IDMA_VG0,
+	IDMA_VG1,
+	IDMA_VGR0,
+	IDMA_VGR1,
+	IDMA_G2,
+	IDMA_G3,
+	IDMA_MAX
 };
 
 enum decon_pixel_format {
-    /* RGB 32bit */
-    DECON_PIXEL_FORMAT_ARGB_8888 = 0,
-    DECON_PIXEL_FORMAT_ABGR_8888,
-    DECON_PIXEL_FORMAT_RGBA_8888,
-    DECON_PIXEL_FORMAT_BGRA_8888,
-    DECON_PIXEL_FORMAT_XRGB_8888,
-    DECON_PIXEL_FORMAT_XBGR_8888,
-    DECON_PIXEL_FORMAT_RGBX_8888,
-    DECON_PIXEL_FORMAT_BGRX_8888,
-    /* RGB 16 bit */
-    DECON_PIXEL_FORMAT_RGBA_5551,
-    DECON_PIXEL_FORMAT_RGB_565,
-    /* YUV422 2P */
-    DECON_PIXEL_FORMAT_NV16,
-    DECON_PIXEL_FORMAT_NV61,
-    /* YUV422 3P */
-    DECON_PIXEL_FORMAT_YVU422_3P,
-    /* YUV420 2P */
-    DECON_PIXEL_FORMAT_NV12,
-    DECON_PIXEL_FORMAT_NV21,
-    DECON_PIXEL_FORMAT_NV12M,
-    DECON_PIXEL_FORMAT_NV21M,
-    /* YUV420 3P */
-    DECON_PIXEL_FORMAT_YUV420,
-    DECON_PIXEL_FORMAT_YVU420,
-    DECON_PIXEL_FORMAT_YUV420M,
-    DECON_PIXEL_FORMAT_YVU420M,
-    
-    DECON_PIXEL_FORMAT_MAX,
+/* RGB 32bit */
+	DECON_PIXEL_FORMAT_ARGB_8888 = 0,
+	DECON_PIXEL_FORMAT_ABGR_8888,
+	DECON_PIXEL_FORMAT_RGBA_8888,
+	DECON_PIXEL_FORMAT_BGRA_8888,
+	DECON_PIXEL_FORMAT_XRGB_8888,
+	DECON_PIXEL_FORMAT_XBGR_8888,
+	DECON_PIXEL_FORMAT_RGBX_8888,
+	DECON_PIXEL_FORMAT_BGRX_8888,
+	/* RGB 16 bit */
+	DECON_PIXEL_FORMAT_RGBA_5551,
+	DECON_PIXEL_FORMAT_RGB_565,
+	/* YUV422 2P */
+	DECON_PIXEL_FORMAT_NV16,
+	DECON_PIXEL_FORMAT_NV61,
+	/* YUV422 3P */
+	DECON_PIXEL_FORMAT_YVU422_3P,
+	/* YUV420 2P */
+	DECON_PIXEL_FORMAT_NV12,
+	DECON_PIXEL_FORMAT_NV21,
+	DECON_PIXEL_FORMAT_NV12M,
+	DECON_PIXEL_FORMAT_NV21M,
+	/* YUV420 3P */
+	DECON_PIXEL_FORMAT_YUV420,
+	DECON_PIXEL_FORMAT_YVU420,
+	DECON_PIXEL_FORMAT_YUV420M,
+	DECON_PIXEL_FORMAT_YVU420M,
+
+	DECON_PIXEL_FORMAT_NV21M_FULL,
+
+	DECON_PIXEL_FORMAT_MAX,
 };
 
 enum decon_blending {
@@ -146,13 +148,6 @@ struct decon_win_config {
             /* source framebuffer coordinates */
             struct decon_frame              src;
         };
-        struct {
-            int left;
-            int top;
-            int right;
-            int bottom;
-            int enableDSU;
-        };
     };
     
     /* destination OSD coordinates */
@@ -166,34 +161,28 @@ struct decon_win_config_data {
     struct decon_win_config config[MAX_DECON_WIN + 1];
 };
 
-enum decon_dsu_state {
-    DECON_DSU_DONE = 0,
-    DECON_DSU_IGNORE_VSYNC,
-    DECON_DSU_MIC_CMD,
-    DECON_DSU_TE_ON,
-    DECON_DSU_DISPLAY_ON,
-    DECON_DSU_UPDATE_RECT,
-};
-enum decon_dsu_mode {
-    DECON_DSU_RES_WQHD = 4,
-    DECON_DSU_RES_FHD = 5,
-    DECON_DSU_RES_HD = 6,
-    DECON_DSU_RES_DEFAULT = 4,
-};
 
 /* IOCTL commands */
-#define S3CFB_WIN_POSITION              _IOW('F', 203, \
-struct decon_user_window)
-#define S3CFB_WIN_SET_PLANE_ALPHA       _IOW('F', 204, \
-struct s3c_fb_user_plane_alpha)
-#define S3CFB_WIN_SET_CHROMA            _IOW('F', 205, \
-struct s3c_fb_user_chroma)
-#define S3CFB_SET_VSYNC_INT             _IOW('F', 206, __u32)
+#define S3CFB_WIN_POSITION		_IOW('F', 203, \
+						struct decon_user_window)
+#define S3CFB_WIN_SET_PLANE_ALPHA	_IOW('F', 204, \
+						struct s3c_fb_user_plane_alpha)
+#define S3CFB_WIN_SET_CHROMA		_IOW('F', 205, \
+						struct s3c_fb_user_chroma)
+#define S3CFB_SET_VSYNC_INT		_IOW('F', 206, __u32)
 
-#define S3CFB_GET_ION_USER_HANDLE       _IOWR('F', 208, \
-struct s3c_fb_user_ion_client)
-#define S3CFB_WIN_CONFIG                _IOW('F', 209, \
-struct decon_win_config_data)
-#define S3CFB_WIN_PSR_EXIT              _IOW('F', 210, int)
+#define S3CFB_GET_ION_USER_HANDLE	_IOWR('F', 208, \
+						struct s3c_fb_user_ion_client)
+#define S3CFB_WIN_CONFIG		_IOW('F', 209, \
+						struct decon_win_config_data)
+#define S3CFB_WIN_PSR_EXIT		_IOW('F', 210, int)
+
+#define EXYNOS_GET_HDMI_CONFIG		_IOW('F', 220, \
+						struct exynos_hdmi_data)
+#define EXYNOS_SET_HDMI_CONFIG		_IOW('F', 221, \
+						struct exynos_hdmi_data)
+
+#define DECON_IOC_LPD_EXIT_LOCK		_IOW('L', 0, u32)
+#define DECON_IOC_LPD_UNLOCK		_IOW('L', 1, u32)
 
 #endif
