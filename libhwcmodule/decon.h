@@ -4,7 +4,7 @@
 #define MAX_DECON_WIN       7
 #define MAX_BUF_PLANE_CNT   3
 
-typedef __u64 dma_addr_t;
+typedef __u32 dma_addr_t;
 
 struct decon_win_rect {
     int x;
